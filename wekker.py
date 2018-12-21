@@ -6,11 +6,13 @@ class Wekker(Fsm):
     """
     def __init__(self):
         Fsm.__init__(self,'idle')
+        self.append_state(name='idle',       on_enter=self.showtime)
+        self.append_state(name='playing',    on_enter=self.radio_on,    on_exit=self.radio_off)
         self.append_transition(src='idle',  event='inc',   condition=None,             action=self.bright_inc,    dst=None),
-        self.append_transition(src='idle',  event='on',    condition=None,             action=self.radio_on,      dst='playing'),
-        self.append_transition(src='idle',  event='alarm', condition=self.switchstate, action=self.radio_on,      dst='playing'),
+        self.append_transition(src='idle',  event='on',    condition=None,             action=None,               dst='playing'),
+        self.append_transition(src='idle',  event='alarm', condition=self.switchstate, action=None,               dst='playing'),
         self.append_transition(src='playing', event='inc', condition=None,             action=self.vol_up,        dst=None),
-        self.append_transition(src='playing', event='off', condition=None,             action=self.radio_off,     dst='idle'),
+        self.append_transition(src='playing', event='off', condition=None,             action=None,               dst='idle'),
         self.vol=0
         self.brightness=0
         self.switch = True
@@ -32,6 +34,8 @@ class Wekker(Fsm):
         self.brightness += 1
     def bright_dec(self):
         self.brightness -= 1
+    def showtime(self):
+        print('17:12')
 
 if __name__== "__main__":
     clock=Wekker()
