@@ -1,4 +1,3 @@
-from transition import Transition
 from fsm import Fsm
 
 class Wekker(Fsm):
@@ -6,18 +5,15 @@ class Wekker(Fsm):
     A wekker with a time display and radio as a finite state machine
     """
     def __init__(self):
-        transitions = [
-            Transition(src='idle',  event='inc',   condition=None,             action=self.bright_inc,    dst=None),
-            Transition(src='idle',  event='on',    condition=None,             action=self.radio_on,      dst='playing'),
-            Transition(src='idle',  event='alarm', condition=self.switchstate, action=self.radio_on,      dst='playing'),
-            Transition(src='playing', event='inc', condition=None,             action=self.vol_up,        dst=None),
-            Transition(src='playing', event='off', condition=None,             action=self.radio_off,     dst='idle'),
-        ]
+        Fsm.__init__(self,'idle')
+        self.append_transition(src='idle',  event='inc',   condition=None,             action=self.bright_inc,    dst=None),
+        self.append_transition(src='idle',  event='on',    condition=None,             action=self.radio_on,      dst='playing'),
+        self.append_transition(src='idle',  event='alarm', condition=self.switchstate, action=self.radio_on,      dst='playing'),
+        self.append_transition(src='playing', event='inc', condition=None,             action=self.vol_up,        dst=None),
+        self.append_transition(src='playing', event='off', condition=None,             action=self.radio_off,     dst='idle'),
         self.vol=0
         self.brightness=0
         self.switch = True
-        Fsm.__init__(self,'idle')
-        self.transition_push(transitions)
     def switchstate(self):
         return self.switch
     def switchon(self):
