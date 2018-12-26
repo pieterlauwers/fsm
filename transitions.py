@@ -24,8 +24,7 @@ class Transitions(object):
                 eventhandler['action']()
             if 'dst' in eventhandler:
                 return eventhandler['dst']
-            else:
-                return src
+        return src
     def condition(self,src,event):
         try:
             return self.transitions[(src,event)].condition

@@ -2,7 +2,7 @@ from transitions import Transitions
 from states import States
 
 class Fsm(object):
-    def __init__(self, initialstate):
+    def __init__(self, initialstate=None):
         self.state = initialstate
         self.states = States()
         self.transitions = Transitions()
@@ -13,7 +13,7 @@ class Fsm(object):
     def append_transition(self, src, event, condition=None, action=None, dst=None):
         self.transitions.append(src,event,condition,action,dst)
 
-    def on_event(self, event):
+    def event(self, event):
         newstate = self.transitions.run(self.state,event)
         if self.state != newstate:
             self.states.exit(self.state)
@@ -38,15 +38,15 @@ if __name__ == "__main__":
     def test():
         return False
     wekker.append_transition(src='idle', event='alarm', condition=test, dst='playing')
-    wekker.on_event('inc')
+    wekker.event('inc')
     print("Wekker is now in", wekker.state)
-    wekker.on_event('on')
+    wekker.event('on')
     print("Wekker is now in", wekker.state)
-    wekker.on_event('inc')
+    wekker.event('inc')
     print("Wekker is now in", wekker.state)
-    wekker.on_event('off')
+    wekker.event('off')
     print("Wekker is now in", wekker.state)
-    wekker.on_event('alarm')
+    wekker.event('alarm')
     print("Wekker is now in", wekker.state)
 
     def ouch():
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     box.append_transition(src='open', event='push', condition=None, action=None, dst='closed'),
     box.append_transition(src='open', event='pull', condition=None, action=ouch, dst=None),
     def do_box(e):
-        print('{event} the {state} box and now the box is {newstate}'.format(event=e, state=box.state,newstate=box.on_event(e)))
+        print('{event} the {state} box and now the box is {newstate}'.format(event=e, state=box.state, newstate=box.event(e)))
     do_box('push')
     do_box('pull')
     do_box('pull')

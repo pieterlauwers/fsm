@@ -39,8 +39,8 @@ class Wekker(Fsm):
 
 if __name__== "__main__":
     clock=Wekker()
-    clock.on_event('on')
-    clock.on_event('off')
-    clock.on_event('inc')
-    clock.on_event('on')
-    clock.on_event('inc')
+    clock.event('on')
+    clock.event('off')
+    clock.event('inc')
+    clock.event('on')
+    clock.event('inc')
