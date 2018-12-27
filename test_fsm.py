@@ -1,4 +1,8 @@
 from fsm import Fsm
+"""
+Testcases for the fsm class (finit state machine).
+Run the pytest command in this folder to execute the tests.
+"""
 def test_fsm_initialize_default():
     state_machine = Fsm()
     assert state_machine.state is None

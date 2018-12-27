@@ -1,5 +1,8 @@
 # fsm
-Finit State Machine
+## A Finit State Machine
 
-Describe a state machine as a set of transactions.
-Each transaction describes what happens if an event happens in a particular state.
+A finit state machine described by a list of transitions.
+A transition moves the state machine from one state to another when an event happens.
+Transitions can be conditional and can call an external function when they happen.
+States are regular strings, but can have enter and exit functions that get called automatically
+
